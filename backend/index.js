@@ -40,15 +40,7 @@ app.use('/campaign', campaignRoutes);
 app.use('/data', dataIngestionRoutes);
 app.use('/api/vendor', vendorRoutes);
 
-app.get('/auth/check-auth', (req, res) => {
-    if (req.isAuthenticated()) {
-        console.log('User:', req.user);
-        res.json({ authenticated: true, user: req.user });
-    } else {
-        res.json({ authenticated: false });
-        console.log('User not authenticated');
-    }
-});
+
 
 async function startServer() {
     await mongoose.connect(process.env.MONGO).then(() => console.log('Connected to MongoDB')).catch(err => console.error('Error connecting to MongoDB:', err));

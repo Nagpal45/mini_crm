@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography } from '@material-ui/core';
-import { createCustomer } from '../utils/api';
+import { createOrder } from '../utils/api';
 
-const CustomerForm = () => {
-  const [customer, setCustomer] = useState({
-    name: '',
-    email: '',
-    phone: '',
+const OrderForm = () => {
+  const [order, setOrder] = useState({
+    customerId: '',
+    product: '',
+    amount: '',
   });
 
   const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCustomer({ ...customer, [name]: value });
+    setOrder({ ...order, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]); // Clear previous errors
+    setErrors([]);
     try {
-      await createCustomer(customer);
-      alert('Customer added successfully');
+      await createOrder(order);
+      alert('Order added successfully');
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
@@ -36,21 +36,21 @@ const CustomerForm = () => {
       <TextField
         name="name"
         label="Name"
-        value={customer.name}
+        value={order.customerId}
         onChange={handleChange}
         margin="normal"
       />
       <TextField
-        name="email"
-        label="Email"
-        value={customer.email}
+        name="product"
+        label="Product"
+        value={order.product}
         onChange={handleChange}
         margin="normal"
       />
       <TextField
-        name="phone"
-        label="Phone"
-        value={customer.phone}
+        name="amount"
+        label="Amount"
+        value={order.amount}
         onChange={handleChange}
         margin="normal"
       />
@@ -64,10 +64,10 @@ const CustomerForm = () => {
         </div>
       )}
       <Button type="submit" variant="contained" color="primary">
-        Add Customer
+        Add Order
       </Button>
     </form>
   );
 };
 
-export default CustomerForm;
+export default OrderForm;

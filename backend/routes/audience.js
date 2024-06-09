@@ -5,12 +5,18 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     const { name, rules } = req.body;
-    const userId = req.user._id ;
-    
+    const userId = req.user._id; 
+
     const customers = await applyRules(rules);
     const audience = new Audience({ userId, name, rules, customers: customers.map(c => c._id) });
     await audience.save();
     res.json(audience);
+});
+
+router.get('/all', async (req, res) => {
+    const userId = req.user._id; 
+    const audiences = await Audience.find({ userId });
+    res.json(audiences);
 });
 
 router.post('/check-size', async (req, res) => {

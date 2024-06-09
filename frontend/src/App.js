@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Dashboard from './pages/dashboard';
@@ -7,12 +7,27 @@ import CampaignPage from './pages/campaign';
 import Login from './pages/login';
 import { AuthProvider, AuthContext } from './utils/context';
 
-const ProtectedRoute = ({ element }) => {
-    const { isAuthenticated } = useContext(AuthContext);
-    return isAuthenticated ? element : <Login />;
-};
+
 
 const App = () => {
+
+    const ProtectedRoute = ({ element }) => {
+        const [loading, setLoading] = useState(true);
+
+        useEffect(() => {
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+        }, []);
+        const { isAuthenticated } = useContext(AuthContext);
+
+        if (loading) {
+            return <h1>Loading...</h1>;
+        }
+
+        return isAuthenticated ? element : <Login />;
+    };
+
     return (
         <AuthProvider>
             <Router>

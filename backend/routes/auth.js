@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }), (req, res) => {
     res.redirect('http://localhost:3000/');
 });
 
@@ -16,4 +16,13 @@ router.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
+
+router.get('/check-auth', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({ authenticated: true, user: req.user });
+    } else {
+        res.json({ authenticated: false });
+    }
+});
+
 module.exports = router;

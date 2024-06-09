@@ -1,25 +1,42 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const { sendToQueue } = require('../config/rabbitMq');
 
 const router = express.Router();
 
-router.post('/customer', (req, res) => {
-    const { name, email, phone } = req.body;
-    if (!name || !email || !phone) {
-        return res.status(400).json({ error: 'All fields are required' });
+const validateCustomer = [
+    body('name').trim().notEmpty().withMessage('Name is required'),
+    body('email').isEmail().withMessage('Invalid email format'),
+    body('phone').isMobilePhone().withMessage('Invalid phone number')
+];
+
+const validateOrder = [
+    body('customerId').trim().notEmpty().withMessage('Customer ID is required'),
+    body('product').trim().notEmpty().withMessage('Product is required'),
+    body('amount').isFloat({ gt: 0 }).withMessage('Amount must be greater than zero'),
+    body('date').optional().isISO8601().toDate().withMessage('Invalid date format')
+];
+
+router.post('/customer', validateCustomer, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
+
+    const { name, email, phone } = req.body;
     sendToQueue('customer_queue', { name, email, phone });
     res.json({ message: 'Customer added' });
 });
 
-router.post('/order', (req, res) => {
-    const { customerId, product, amount, date } = req.body;
-    if (!customerId || !product || !amount) {
-        return res.status(400).json({ error: 'All fields are required' });
+router.post('/order', validateOrder, (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
+
+    const { customerId, product, amount, date } = req.body;
     sendToQueue('order_queue', { customerId, product, amount, date });
     res.json({ message: 'Order added' });
 });
-
 
 module.exports = router;

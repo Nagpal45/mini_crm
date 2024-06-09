@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.post('/:audienceId', async (req, res) => {
     const { audienceId } = req.params;
-    const logs = await sendCampaign(audienceId);
+    const { message } = req.body;
+    const logs = await sendCampaign(audienceId, message);
     res.json(logs);
 });
 

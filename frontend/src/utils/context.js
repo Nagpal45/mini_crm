@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
             const data = await response.json();
             setIsAuthenticated(data.authenticated);
             setUser(data.user);
-            console.log('User:', data.user);
         } catch (error) {
             console.error('Error checking authentication status:', error);
             setIsAuthenticated(false);

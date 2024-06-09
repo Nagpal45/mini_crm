@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { createAudience, getCustomerSize } from '../utils/api';
 
-const AudienceForm = () => {
+const AudienceForm = ({setUpdate}) => {
   const [name, setName] = useState('');
   const [rules, setRules] = useState([{ field: '', operator: '', value: '' }]);
   const [size, setSize] = useState(null);
@@ -27,6 +27,7 @@ const AudienceForm = () => {
     e.preventDefault();
     await createAudience(name, rules);
     alert('Audience created successfully');
+    setUpdate((prev) => !prev);
   };
 
   return (

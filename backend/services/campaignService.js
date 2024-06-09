@@ -2,11 +2,10 @@ const CommunicationLog = require('../models/communicationLog');
 const Audience = require('../models/audience');
 const axios = require('axios');
 
-async function sendCampaign(audienceId) {
+async function sendCampaign(audienceId, message) {
     const audience = await Audience.findById(audienceId).populate('customers');
     const logs = [];
     for (const customer of audience.customers) {
-        const message = `Hi ${customer.name}, here is 10% off on your next order`;
         const log = new CommunicationLog({
             audienceId,
             message,
@@ -22,7 +21,7 @@ async function sendCampaign(audienceId) {
 
 async function sendToVendor(log) {
     try {
-        await axios.post('/api/vendor/send', { logId: log._id });
+        await axios.post('http://localhost:5000/api/vendor/send', { logId: log._id });
     } catch (err) {
         console.error('Error sending to vendor:', err);
     }
