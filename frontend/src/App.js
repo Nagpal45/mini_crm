@@ -1,24 +1,31 @@
-import './App.css';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/navbar';
+import Dashboard from './pages/dashboard';
+import AudiencePage from './pages/audience';
+import CampaignPage from './pages/campaign';
+import Login from './pages/login';
+import { AuthProvider, AuthContext } from './utils/context';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="" className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const ProtectedRoute = ({ element }) => {
+    const { isAuthenticated } = useContext(AuthContext);
+    return isAuthenticated ? element : <Login />;
+};
+
+const App = () => {
+    return (
+        <AuthProvider>
+            <Router>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
+                    <Route path="/audiences" element={<ProtectedRoute element={<AudiencePage />} />} />
+                    <Route path="/campaigns" element={<ProtectedRoute element={<CampaignPage />} />} />
+                    <Route path="*" element={<h1>Not Found</h1>} />
+                </Routes>
+            </Router>
+        </AuthProvider>
+    );
+};
 
 export default App;

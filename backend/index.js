@@ -5,6 +5,8 @@ const session = require('express-session');
 const { processDeliveryReceipts } = require('./services/deliveryService');
 const { connectRabbitMQ } = require('./config/rabbitMq');
 const dotenv = require('dotenv');
+const MongoStore = require('connect-mongo');
+const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
 const audienceRoutes = require('./routes/audience');
@@ -18,16 +20,35 @@ require('./config/passport');
 
 const app = express();
 
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
 app.use(express.json());
-app.use(session({ secret: 'your_secret_key', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
+app.use(session({
+    secret: Math.random().toString(36).substring(2),
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO }),
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+}));
 app.use(passport.session());
+
 
 app.use('/auth', authRoutes);
 app.use('/audience', audienceRoutes);
 app.use('/campaign', campaignRoutes);
 app.use('/data', dataIngestionRoutes);
 app.use('/api/vendor', vendorRoutes);
+
+app.get('/auth/check-auth', (req, res) => {
+    if (req.isAuthenticated()) {
+        console.log('User:', req.user);
+        res.json({ authenticated: true, user: req.user });
+    } else {
+        res.json({ authenticated: false });
+        console.log('User not authenticated');
+    }
+});
 
 async function startServer() {
     await mongoose.connect(process.env.MONGO).then(() => console.log('Connected to MongoDB')).catch(err => console.error('Error connecting to MongoDB:', err));
