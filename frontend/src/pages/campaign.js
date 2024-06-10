@@ -11,8 +11,7 @@ const CampaignPage = () => {
 
   const handleSendCampaign = async () => {
     try {
-      const response = await sendCampaign(audienceId, message);
-      console.log('Campaign sent:', response.data);
+      await sendCampaign(audienceId, message);
       window.location.href = '/campaigns';
     } catch (error) {
       console.error('Error sending campaign:', error);

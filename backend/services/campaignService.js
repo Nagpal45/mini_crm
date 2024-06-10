@@ -10,6 +10,7 @@ async function sendCampaign(audienceId, message) {
             userId: audience.userId,
             audienceId,
             audienceName: audience.name,
+            customerMail: customer.email,
             message,
             status: 'PENDING'
         });

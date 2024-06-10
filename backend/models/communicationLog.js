@@ -6,6 +6,7 @@ const communicationLogSchema = new mongoose.Schema({
     audienceName: String,
     message: String,
     status: { type: String, enum: ['PENDING','SENT', 'FAILED'], default: 'PENDING' },
+    customerMail: String,
     sentAt: Date
 });
 
