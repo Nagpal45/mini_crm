@@ -21,7 +21,7 @@ const CampaignList = () => {
       <h2 className='text-[30px] font-bold'>Your Campaigns</h2>
       <div className="flex flex-row w-full flex-wrap">
       {campaigns.map((campaign) => (
-        <div key={campaign._id} className={`flex flex-col justify-center items-center min-w-[450px] max-w-[650px] items-center p-4 border border-[2px] mt-[30px] rounded-[10px] font-semibold ${campaign.status === 'SENT' ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'} gap-[15px] mr-[30px]`}>
+        <div key={campaign._id} className={`flex flex-col justify-center items-center min-w-[450px] max-w-[690px] items-center p-4 border border-[2px] mt-[30px] rounded-[10px] font-semibold ${campaign.status === 'SENT' ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'} gap-[15px] mr-[30px]`}>
             <div className="flex flex-row justify-between items-start w-full gap-[40px]">
               <p className='text-gray-500'>Message</p>
               <p>{campaign.message}</p>

@@ -11,7 +11,7 @@ async function sendCampaign(audienceId, message) {
             audienceId,
             audienceName: audience.name,
             customerMail: customer.email,
-            message,
+            message: 'Hello, ' + customer.name + '! ' + message,
             status: 'PENDING'
         });
         await log.save();
