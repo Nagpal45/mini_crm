@@ -39,13 +39,9 @@ async function applyRules(rules, userId) {
                 applyCondition(query, 'maxVisits', operator, value);
                 break;
             case 'lastVisit':
-                if (operator === 'not_visited_last') {
-                    const monthsAgo = new Date();
-                    monthsAgo.setMonth(monthsAgo.getMonth() - value);
-                    query['lastVisit'] = { $lt: monthsAgo };
-                } else {
-                    applyCondition(query, 'lastVisit', operator, value);
-                }
+                const dateValue = new Date();
+                dateValue.setMonth(dateValue.getMonth() - value);
+                applyCondition(query, 'lastVisit', operator, dateValue.toISOString());
                 break;
         }
     });

@@ -5,35 +5,42 @@ const Order = require('../models/order');
 async function processData() {
   const channel = await connectRabbitMQ();
 
-  const batchSize = 100; 
+  const batchSize = 100;
   let customerBatch = [];
   let orderBatch = [];
+  let processingCustomerBatch = false;
+  let processingOrderBatch = false;
 
   const processCustomerBatch = async () => {
     if (customerBatch.length > 0) {
+      processingCustomerBatch = true;
       try {
         await Customer.insertMany(customerBatch);
         customerBatch = [];
       } catch (err) {
         console.error('Error adding customers:', err);
+      } finally {
+        processingCustomerBatch = false;
       }
     }
   };
 
   const processOrderBatch = async () => {
     if (orderBatch.length > 0) {
+      processingOrderBatch = true;
       try {
         await Order.insertMany(orderBatch);
-        await updateCustomerData(orderBatch); 
+        await updateCustomerData(orderBatch);
         orderBatch = [];
       } catch (err) {
         console.error('Error adding orders:', err);
+      } finally {
+        processingOrderBatch = false;
       }
     }
   };
 
   const updateCustomerData = async (orders) => {
-    const customerIds = orders.map(order => order.customerId);
     const customerUpdates = {};
 
     orders.forEach(order => {
@@ -48,7 +55,7 @@ async function processData() {
       }
     });
 
-    const bulkOps = customerIds.map(customerId => ({
+    const bulkOps = Object.keys(customerUpdates).map(customerId => ({
       updateOne: {
         filter: { _id: customerId },
         update: {
@@ -74,7 +81,7 @@ async function processData() {
       const customerData = JSON.parse(msg.content.toString());
       customerBatch.push(customerData);
 
-      if (customerBatch.length >= batchSize) {
+      if (customerBatch.length >= batchSize && !processingCustomerBatch) {
         await processCustomerBatch();
       }
 
@@ -87,7 +94,7 @@ async function processData() {
       const orderData = JSON.parse(msg.content.toString());
       orderBatch.push(orderData);
 
-      if (orderBatch.length >= batchSize) {
+      if (orderBatch.length >= batchSize && !processingOrderBatch) {
         await processOrderBatch();
       }
 
@@ -95,9 +102,18 @@ async function processData() {
     }
   });
 
-  // Periodic batch processing
-  setInterval(processCustomerBatch, 5000); // Process any remaining customers every 5 seconds
-  setInterval(processOrderBatch, 5000); // Process any remaining orders every 5 seconds
+
+  setInterval(() => {
+    if (!processingCustomerBatch) {
+      processCustomerBatch();
+    }
+  }, 5000);
+
+  setInterval(() => {
+    if (!processingOrderBatch) {
+      processOrderBatch();
+    }
+  }, 5000);
 }
 
 module.exports = processData;
