@@ -1,17 +1,25 @@
-import React from 'react';
-import { AppBar, Toolbar, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { logout } from '../utils/api';
+import { AuthContext } from '../utils/context';
 
 const Navbar = () => {
+  const {user} = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    await logout();
+     window.location.href = '/';
+ };
+
+
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Button color="inherit" component={Link} to="/">Dashboard</Button>
-        <Button color="inherit" component={Link} to="/audiences">Audiences</Button>
-        <Button color="inherit" component={Link} to="/campaigns">Campaigns</Button>
-        <Button color="inherit" component={Link} to="/login">Login</Button>
-      </Toolbar>
-    </AppBar>
+    <div className='w-full flex h-[60px] flex items-center justify-center font-figtree bg-black text-white  font-semibold text-[16px]'>
+      <ul className='flex flex-row items-center justify-around w-1/3'>
+        <a href="/"><li>Dashboard</li></a>
+        <a href="/audiences"><li>Audiences</li></a>
+        <a href="/campaigns"><li>Campaigns</li></a>
+        {user && <li onClick={handleLogout}>Logout</li>}
+      </ul>
+    </div>
   );
 };
 

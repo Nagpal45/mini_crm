@@ -6,6 +6,7 @@ import AudiencePage from './pages/audience';
 import CampaignPage from './pages/campaign';
 import Login from './pages/login';
 import { AuthProvider, AuthContext } from './utils/context';
+import Loading from './components/loading';
 
 
 
@@ -17,12 +18,12 @@ const App = () => {
         useEffect(() => {
             setTimeout(() => {
                 setLoading(false);
-            }, 1000);
+            }, 500);
         }, []);
         const { isAuthenticated } = useContext(AuthContext);
 
         if (loading) {
-            return <h1>Loading...</h1>;
+            return <Loading/>
         }
 
         return isAuthenticated ? element : <Login />;

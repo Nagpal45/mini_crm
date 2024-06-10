@@ -8,3 +8,4 @@ export const getCampaigns = () => axios.get('/campaign');
 export const createCustomer = (customer) => axios.post('/data/customer', customer);
 export const createOrder = (order) => axios.post('/data/order', order);
 export const sendCampaign = (audienceId, message) => axios.post(`/campaign/${audienceId}`, { message });
+export const logout = () => axios.get('/auth/logout');
