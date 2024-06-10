@@ -35,7 +35,7 @@ const OrderForm = () => {
       <h2 className='text-[30px] font-bold'>Add Order</h2>
     <form onSubmit={handleSubmit} className='flex mt-[40px] ml-4 gap-[30px] flex-col w-[600px]'>
       <input
-        name="CustomerId"
+        name="customerId"
         placeholder="CustomerId"
         value={order.customerId}
         onChange={handleChange}
