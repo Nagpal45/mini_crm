@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     const { name, rules } = req.body;
     const userId = req.user._id; 
 
-    const customers = await applyRules(rules);
+    const customers = await applyRules(rules, userId);
     const audience = new Audience({ userId, name, rules, customers: customers.map(c => c._id) });
     await audience.save();
     res.json(audience);
@@ -21,12 +21,13 @@ router.get('/all', async (req, res) => {
 
 router.post('/check-size', async (req, res) => {
     const { rules } = req.body;
-    const customers = await applyRules(rules);
+    const userId = req.user._id;
+    const customers = await applyRules(rules, userId);
     res.json({ size: customers.length });
 });
 
-async function applyRules(rules) {
-    let query = {};
+async function applyRules(rules, userId) {
+    let query = { userId };
 
     rules.forEach(rule => {
         const { field, operator, value } = rule;
