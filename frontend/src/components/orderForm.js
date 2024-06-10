@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Button, TextField, Typography } from '@material-ui/core';
 import { createOrder } from '../utils/api';
 
 const OrderForm = () => {
@@ -32,41 +31,44 @@ const OrderForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        name="name"
-        label="Name"
+    <div className='font-figtree flex flex-col justify-start items-center w-1/2'>
+      <h2 className='text-[30px] font-bold'>Add Order</h2>
+    <form onSubmit={handleSubmit} className='flex mt-[40px] ml-4 gap-[30px] flex-col w-[600px]'>
+      <input
+        name="CustomerId"
+        placeholder="CustomerId"
         value={order.customerId}
         onChange={handleChange}
-        margin="normal"
+        className='border border-gray-400 p-2 rounded-md w-full h-[50px]'
       />
-      <TextField
+      <input
         name="product"
-        label="Product"
+        placeholder="Product"
         value={order.product}
         onChange={handleChange}
-        margin="normal"
+        className='border border-gray-400 p-2 rounded-md w-full h-[50px]'
       />
-      <TextField
+      <input
         name="amount"
-        label="Amount"
+        placeholder="Amount"
         value={order.amount}
         onChange={handleChange}
-        margin="normal"
+        className='border border-gray-400 p-2 rounded-md w-full h-[50px]'
       />
       {errors.length > 0 && (
         <div>
           {errors.map((error, index) => (
-            <Typography key={index} color="error">
-              {error.msg}
-            </Typography>
+            <div key={index} className='text-red-500'>
+                {"** " + error.msg}
+            </div>
           ))}
         </div>
       )}
-      <Button type="submit" variant="contained" color="primary">
+      <button type="submit" className='bg-blue-200 w-5/6 rounded-[50px] h-[50px] self-center'>
         Add Order
-      </Button>
+      </button>
     </form>
+  </div>
   );
 };
 

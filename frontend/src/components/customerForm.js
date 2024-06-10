@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { Button, TextField, Typography } from '@material-ui/core';
 import { createCustomer } from '../utils/api';
 import { AuthContext } from '../utils/context';
 
@@ -21,7 +20,7 @@ const CustomerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]); 
+    setErrors([]);
     try {
       await createCustomer({ ...customer, userId: user._id });
       alert('Customer added successfully');
@@ -35,41 +34,44 @@ const CustomerForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <TextField
-        name="name"
-        label="Name"
-        value={customer.name}
-        onChange={handleChange}
-        margin="normal"
-      />
-      <TextField
-        name="email"
-        label="Email"
-        value={customer.email}
-        onChange={handleChange}
-        margin="normal"
-      />
-      <TextField
-        name="phone"
-        label="Phone"
-        value={customer.phone}
-        onChange={handleChange}
-        margin="normal"
-      />
-      {errors.length > 0 && (
-        <div>
-          {errors.map((error, index) => (
-            <Typography key={index} color="error">
-              {error.msg}
-            </Typography>
-          ))}
-        </div>
-      )}
-      <Button type="submit" variant="contained" color="primary">
-        Add Customer
-      </Button>
-    </form>
+    <div className='font-figtree flex flex-col justify-start items-center w-1/2'>
+      <h2 className='text-[30px] font-bold'>Add Customer</h2>
+      <form onSubmit={handleSubmit} className='flex mt-[40px] ml-4 gap-[30px] flex-col w-[600px]'>
+        <input
+          name="name"
+          placeholder="Name"
+          value={customer.name}
+          onChange={handleChange}
+          className='border border-gray-400 p-2 rounded-md w-full h-[50px]'
+        />
+        <input
+          name="email"
+          placeholder="Email"
+          value={customer.email}
+          onChange={handleChange}
+          className='border border-gray-400 p-2 rounded-md w-full h-[50px]'
+        />
+        <input
+          name="phone"
+          placeholder="Phone"
+          value={customer.phone}
+          onChange={handleChange}
+          className='border border-gray-400 p-2 rounded-md w-full h-[50px]'
+        />
+        {errors.length > 0 && (
+          <div>
+            {errors.map((error, index) => (
+              <div key={index} className='text-red-500'>
+                {"** " + error.msg}
+              </div>
+            ))}
+          </div>
+        )}
+        <button type="submit" className='bg-blue-200 w-5/6 self-center h-[50px] rounded-[50px]'>
+          Add Customer
+        </button>
+      </form>
+    </div>
   );
 };
 

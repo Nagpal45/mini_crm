@@ -7,7 +7,7 @@ const AudienceList = ({update}) => {
   const [audiences, setAudiences] = useState([]);
 
   const handleCampaign = (audienceId) => {
-    window.location.href = `/campaigns?audienceId=${audienceId}`;
+    window.location.href = `/campaigns?a=${audienceId}`;
   };
 
   useEffect(() => {
@@ -21,17 +21,19 @@ const AudienceList = ({update}) => {
   }, [update]);
 
   return (
-    <div>
-      <h2>Audiences</h2>
+    <div className='w-1/2'>
+      <h2 className='text-[30px] font-bold mb-[20px]'>Your Audiences</h2>
       {audiences.map((audience) => (
-        <div key={audience._id}>
-          <p>{audience.name}</p>
-          <p>Size: {
+        <div key={audience._id} className='flex flex-row w-11/12 justify-between items-center py-2 pl-4 pr-8 bg-green-100 mt-[20px] rounded-[10px] font-semibold'>
+          <div className="flex flex-col justify-center items-start">
+          <p className='text-[20px]'>{audience.name}</p>
+          <p className='text-[16px] mt-[5px] text-gray-500'>Size: {
             audience.customers.length > 0
               ? audience.customers.length
               : 'No customers found'
           }</p>
-          <button onClick={() => handleCampaign(audience._id)}>Create campaign</button>
+          </div>
+          <button className='text-[14px] bg-green-300 px-4 py-2 rounded-full' onClick={() => handleCampaign(audience._id)}>Create campaign</button>
         </div>
       ))}
     </div>

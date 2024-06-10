@@ -7,7 +7,7 @@ const CampaignPage = () => {
   const [message, setMessage] = useState('');
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const audienceId = queryParams.get('audienceId');
+  const audienceId = queryParams.get('a');
 
   const handleSendCampaign = async () => {
     try {
@@ -20,18 +20,22 @@ const CampaignPage = () => {
   };
 
   return (
-    <div>
+    <div className='w-full  px-[30px] py-[30px]'>
       {
       audienceId ? (
-        <div>
-      <h2>Create Campaign</h2>
+        <>
+        <div className='flex w-11/12 flex-col mb-[80px]'>
+      <h2 className='text-[30px] font-bold mb-[20px]'>Create Campaign</h2>
       <textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Enter your campaign message"
+        className='border border-black p-4 rounded-[10px] mb-[20px] w-full h-[200px] text-[18px]'
       ></textarea>
-      <button onClick={handleSendCampaign}>Send Campaign</button>
-    </div >
+      <button className='bg-blue-200 w-5/6 self-center h-[50px] rounded-full' onClick={handleSendCampaign}>Send Campaign</button>
+    </div>
+      <CampaignList />
+      </>
       ) :
       <CampaignList />
     }

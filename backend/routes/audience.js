@@ -50,6 +50,7 @@ async function applyRules(rules, userId) {
         }
     });
 
+    console.log(query);
     const customers = await Customer.find(query);
     return customers;
 }

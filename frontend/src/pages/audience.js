@@ -6,8 +6,7 @@ import AudienceList from '../components/audienceList';
 const AudiencePage = () => {
   const [update, setUpdate] = React.useState(false);
   return (
-    <div>
-      <h1>Create Audience</h1>
+    <div className='flex flex-row w-full pt-[20px] pb-[30px]'>
       <AudienceForm setUpdate={setUpdate} />
       <AudienceList update={update}/>
     </div>

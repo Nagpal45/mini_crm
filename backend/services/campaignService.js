@@ -9,8 +9,8 @@ async function sendCampaign(audienceId, message) {
         const log = new CommunicationLog({
             userId: audience.userId,
             audienceId,
+            audienceName: audience.name,
             message,
-            recipient: customer.email,
             status: 'PENDING'
         });
         await log.save();
