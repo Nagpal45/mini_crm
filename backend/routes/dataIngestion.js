@@ -22,9 +22,9 @@ router.post('/customer', validateCustomer, (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-
+    const userId = req.user._id;
     const { name, email, phone } = req.body;
-    sendToQueue('customer_queue', { name, email, phone });
+    sendToQueue('customer_queue', { name, email, phone, userId });
     res.json({ message: 'Customer added' });
 });
 

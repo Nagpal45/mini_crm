@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, TextField, Typography } from '@material-ui/core';
 import { createCustomer } from '../utils/api';
+import { AuthContext } from '../utils/context';
 
 const CustomerForm = () => {
+  const { user } = useContext(AuthContext);
+
   const [customer, setCustomer] = useState({
     name: '',
     email: '',
@@ -18,9 +21,9 @@ const CustomerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]); // Clear previous errors
+    setErrors([]); 
     try {
-      await createCustomer(customer);
+      await createCustomer({ ...customer, userId: user._id });
       alert('Customer added successfully');
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
