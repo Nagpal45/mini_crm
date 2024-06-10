@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getCampaigns } from '../utils/api';
+import { AuthContext } from '../utils/context';
 
 const CampaignList = () => {
   const [campaigns, setCampaigns] = useState([]);
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
-      const response = await getCampaigns();
-      setCampaigns(response.data);
+      if(user) {
+        const response = await getCampaigns(user._id);
+        setCampaigns(response.data);
+      }
     };
     fetchCampaigns();
   }, []);

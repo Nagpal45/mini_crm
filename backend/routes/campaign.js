@@ -11,7 +11,8 @@ router.post('/:audienceId', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-    const campaigns = await CommunicationLog.find().sort({ sentAt: -1 });
+    const userId = req.user._id;
+    const campaigns = await CommunicationLog.find({userId}).sort({ sentAt: -1 });
     res.json(campaigns);
 });
 

@@ -7,6 +7,7 @@ async function sendCampaign(audienceId, message) {
     const logs = [];
     for (const customer of audience.customers) {
         const log = new CommunicationLog({
+            userId: audience.userId,
             audienceId,
             message,
             recipient: customer.email,
