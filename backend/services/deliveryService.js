@@ -26,7 +26,6 @@ async function processBatch() {
         });
 
         await Promise.all(updatePromises);
-        console.log(`Processed batch of ${batch.length} messages`);
     }
 }
 

@@ -21,7 +21,6 @@ const AudienceForm = ({ setUpdate }) => {
 
   const handleSizeCheck = async () => {
     const response = await getCustomerSize(rules, user._id);
-    console.log(rules);
     setSize(response.data.size);
   };
 
