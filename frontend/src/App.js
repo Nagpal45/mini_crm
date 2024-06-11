@@ -25,8 +25,6 @@ const App = () => {
         if (loading) {
             return <Loading/>
         }
-
-        console.log(isAuthenticated);
         return isAuthenticated ? element : <Login />;
     };
 
