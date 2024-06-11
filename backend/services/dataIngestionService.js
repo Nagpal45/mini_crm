@@ -85,7 +85,6 @@ async function processData() {
         await processCustomerBatch();
       }
 
-      // Acknowledge message after adding to the batch
       channel.ack(msg);
     }
   });
@@ -99,21 +98,20 @@ async function processData() {
         await processOrderBatch();
       }
 
-      // Acknowledge message after adding to the batch
       channel.ack(msg);
     }
   });
 
-  // Process remaining batches at intervals
-  setInterval(async () => {
-    if (!processingCustomerBatch && customerBatch.length > 0) {
-      await processCustomerBatch();
+
+  setInterval(() => {
+    if (!processingCustomerBatch) {
+      processCustomerBatch();
     }
   }, 5000);
 
-  setInterval(async () => {
-    if (!processingOrderBatch && orderBatch.length > 0) {
-      await processOrderBatch();
+  setInterval(() => {
+    if (!processingOrderBatch) {
+      processOrderBatch();
     }
   }, 5000);
 }

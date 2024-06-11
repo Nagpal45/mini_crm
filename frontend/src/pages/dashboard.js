@@ -12,7 +12,7 @@ const Dashboard = () => {
       return;
     }
 
-    const customers = generateBulkCustomers(1000, user._id);
+    const customers = generateBulkCustomers(500, user._id);
     await sendBulkDataToServer('https://mini-crm-hnpl.onrender.com/data/customer', customers);
   };
 
@@ -23,7 +23,7 @@ const Dashboard = () => {
     }
 
     const customerIds = await fetchCustomerIds();
-    const orders = generateBulkOrders(1000, customerIds); 
+    const orders = generateBulkOrders(500, customerIds); 
     await sendBulkDataToServer('https://mini-crm-hnpl.onrender.com/data/order', orders);
   };
 
