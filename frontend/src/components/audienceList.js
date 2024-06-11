@@ -14,6 +14,7 @@ const AudienceList = ({update}) => {
     const fetchAudiences = async () => {
       if (user) {
         const response = await getAudiences(user._id);
+        console.log(response.data);
         setAudiences(response.data);
       }
     };
