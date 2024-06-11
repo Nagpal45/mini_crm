@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
 export const login = (email, password) => axios.post('https://mini-crm-hnpl.onrender.com/auth/login', { email, password });
 export const getCustomerSize = (rules) => axios.post('https://mini-crm-hnpl.onrender.com/audience/check-size', { rules });
 export const createAudience = (name, rules) => axios.post('https://mini-crm-hnpl.onrender.com/audience', { name, rules });
