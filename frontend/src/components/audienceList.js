@@ -23,7 +23,7 @@ const AudienceList = ({update}) => {
   return (
     <div className='w-1/2'>
       <h2 className='text-[30px] font-bold mb-[20px]'>Your Audiences</h2>
-      {audiences.map((audience) => (
+      {audiences?.map((audience) => (
         <div key={audience._id} className='flex flex-row w-11/12 justify-between items-center py-2 pl-4 pr-8 bg-green-100 mt-[20px] rounded-[10px] font-semibold'>
           <div className="flex flex-col justify-center items-start">
           <p className='text-[20px]'>{audience.name}</p>
