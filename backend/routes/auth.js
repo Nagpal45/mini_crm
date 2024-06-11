@@ -19,6 +19,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/check-auth', (req, res) => {
     res.json({ authenticated: req.isAuthenticated(), user: req.user });
+    console.log(req.user);
 });
 
 module.exports = router;

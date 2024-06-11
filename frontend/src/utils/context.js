@@ -12,6 +12,9 @@ const AuthProvider = ({ children }) => {
             const data = await response.json();
             setIsAuthenticated(data.authenticated);
             setUser(data.user);
+            setTimeout(() =>{
+                console.log(response);
+            }, 2000);
         } catch (error) {
             console.error('Error checking authentication status:', error);
             setIsAuthenticated(false);
