@@ -40,7 +40,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://mini-crm-hnpl.onrender.com",
   "devDependencies": {
     "tailwindcss": "^3.4.4"
   }

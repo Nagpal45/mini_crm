@@ -3,7 +3,7 @@ import React from 'react';
 const Login = () => {
     
   const handleLogin = () => {
-    window.location.href = 'http://localhost:5000/auth/google';
+    window.location.href = 'https://mini-crm-hnpl.onrender.com/auth/google';
   };
 
   return (

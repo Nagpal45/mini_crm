@@ -18,7 +18,7 @@ const App = () => {
         useEffect(() => {
             setTimeout(() => {
                 setLoading(false);
-            }, 500);
+            }, 2000);
         }, []);
         const { isAuthenticated } = useContext(AuthContext);
 

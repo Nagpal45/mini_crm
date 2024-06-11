@@ -13,7 +13,7 @@ const Dashboard = () => {
     }
 
     const customers = generateBulkCustomers(1000, user._id);
-    await sendBulkDataToServer('http://localhost:5000/data/customer', customers);
+    await sendBulkDataToServer('https://mini-crm-hnpl.onrender.com/data/customer', customers);
   };
 
   const handleBulkOrders = async () => {
@@ -24,7 +24,7 @@ const Dashboard = () => {
 
     const customerIds = await fetchCustomerIds();
     const orders = generateBulkOrders(1000, customerIds); 
-    await sendBulkDataToServer('http://localhost:5000/data/order', orders);
+    await sendBulkDataToServer('https://mini-crm-hnpl.onrender.com/data/order', orders);
   };
 
   const generateBulkCustomers = (count, userId) => {
