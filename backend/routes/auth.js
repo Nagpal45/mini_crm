@@ -18,11 +18,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/check-auth', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json({ authenticated: true, user: req.user });
-    } else {
-        res.json({ authenticated: false });
-    }
+    res.json({ authenticated: req.isAuthenticated(), user: req.user });
 });
 
 module.exports = router;

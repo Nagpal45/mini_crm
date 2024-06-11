@@ -8,9 +8,7 @@ const AuthProvider = ({ children }) => {
 
     const checkAuth = async () => {
         try {
-            const response = await fetch('https://mini-crm-hnpl.onrender.com/auth/check-auth', {
-                credentials: 'include',
-            });
+            const response = await fetch('https://mini-crm-hnpl.onrender.com/auth/check-auth');
             const data = await response.json();
             setIsAuthenticated(data.authenticated);
             setUser(data.user);
