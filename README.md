@@ -33,4 +33,4 @@ To run the backend, follow these steps:
    ```
 
 ## Usage
-Once both the frontend and backend are running, you can access the Xeno CRM system through your browser at http://localhost:3000/
+Once both the frontend and backend are running, you can access the CRM system through your browser at http://localhost:3000/
