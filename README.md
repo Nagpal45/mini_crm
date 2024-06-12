@@ -27,7 +27,19 @@ To run the backend, follow these steps:
    ```bash
    npm i
    ```
-2. Start the server:
+2. Setup the Environment variables
+    ```bash
+   MONGO = your_mongodb_connection_url
+
+   RABBITMQ_URL = amqp://localhost/  (Install RabbitMq on system or Run RabbitMq docker image using docker hub) 
+
+   GOOGLE_CLIENT_ID = your_google_client_id
+   GOOGLE_CLIENT_SECRET = your_google_client_secret
+
+   (Get these google credentials by creating oauth credentials from google cloud console)
+   ```
+
+4. Start the server:
    ```bash
    node index.js
    ```
